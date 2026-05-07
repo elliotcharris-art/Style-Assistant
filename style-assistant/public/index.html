@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Style Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&family=Dancing+Script:wght@400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- Hero -->
+    <header class="hero">
+      <div class="hero-inner">
+        <p class="hero-eyebrow">AI-powered</p>
+        <h1 class="hero-title">Style Assistant</h1>
+        <p class="hero-byline">by Elliot Harris</p>
+        <p class="hero-sub">Upload your wardrobe. Drop a lookbook image. We'll match what you already own.</p>
+      </div>
+    </header>
+
+    <main class="layout">
+
+      <!-- ── Sidebar ─────────────────────────────────── -->
+      <aside class="sidebar">
+
+        <div class="wardrobe-header">
+          <span class="wardrobe-title"><i class="ti ti-shirt" aria-hidden="true"></i> Wardrobe</span>
+          <span class="count-badge" id="wardrobe-count">0 items</span>
+        </div>
+        <div class="bg-note" style="margin-bottom:1rem;">
+          <i class="ti ti-wand" aria-hidden="true"></i>
+          Backgrounds removed automatically on upload
+        </div>
+
+        <!-- Headwear -->
+        <section class="panel cat-panel" aria-label="Headwear">
+          <div class="panel-title">
+            <i class="ti ti-baseball-cap" aria-hidden="true"></i>
+            Headwear
+            <span class="count-badge cat-count" id="count-headwear">0</span>
+          </div>
+          <div class="panel-body">
+            <div class="wardrobe-grid" id="grid-headwear" role="list" data-category="headwear"></div>
+          </div>
+        </section>
+
+        <!-- Top -->
+        <section class="panel cat-panel" aria-label="Tops">
+          <div class="panel-title">
+            <i class="ti ti-shirt" aria-hidden="true"></i>
+            Top
+            <span class="count-badge cat-count" id="count-top">0</span>
+          </div>
+          <div class="panel-body">
+            <div class="wardrobe-grid" id="grid-top" role="list" data-category="top"></div>
+          </div>
+        </section>
+
+        <!-- Bottom -->
+        <section class="panel cat-panel" aria-label="Bottoms">
+          <div class="panel-title">
+            <i class="ti ti-scissors" aria-hidden="true"></i>
+            Bottom
+            <span class="count-badge cat-count" id="count-bottom">0</span>
+          </div>
+          <div class="panel-body">
+            <div class="wardrobe-grid" id="grid-bottom" role="list" data-category="bottom"></div>
+          </div>
+        </section>
+
+        <!-- Shoes -->
+        <section class="panel cat-panel" aria-label="Shoes">
+          <div class="panel-title">
+            <i class="ti ti-shoe" aria-hidden="true"></i>
+            Shoes
+            <span class="count-badge cat-count" id="count-shoes">0</span>
+          </div>
+          <div class="panel-body">
+            <div class="wardrobe-grid" id="grid-shoes" role="list" data-category="shoes"></div>
+          </div>
+        </section>
+
+      </aside>
+
+      <!-- ── Main ───────────────────────────────────── -->
+      <div class="main-col">
+
+        <!-- Lookbook -->
+        <section class="panel" aria-label="Lookbook inspiration">
+          <div class="panel-title">
+            <i class="ti ti-photo" aria-hidden="true"></i>
+            Lookbook inspiration
+          </div>
+
+          <div id="lookbook-drop" class="lookbook-drop" tabindex="0" role="button" aria-label="Upload lookbook image">
+            <input type="file" accept="image/*" id="lookbook-input" aria-label="Choose lookbook image" />
+            <i class="ti ti-bookmark" aria-hidden="true"></i>
+            <p><strong>Drop a lookbook image here</strong>Click to upload · or paste with Ctrl+V / Cmd+V</p>
+          </div>
+
+          <div id="lookbook-loaded" class="lookbook-loaded" style="display:none;">
+            <div class="lookbook-thumb-wrap">
+              <img id="lookbook-thumb" alt="Lookbook reference" />
+              <span class="thumb-label">Inspiration</span>
+            </div>
+            <div class="lookbook-loaded-info">
+              <p class="loaded-label">Lookbook loaded</p>
+              <label class="change-btn">
+                <input type="file" accept="image/*" id="lookbook-change" />
+                Change image
+              </label>
+            </div>
+          </div>
+
+          <!-- Generate button -->
+          <div class="action-row">
+            <button class="generate-btn" id="generate-btn" disabled>
+              <i class="ti ti-sparkles" aria-hidden="true"></i>
+              Generate fit
+            </button>
+            <p class="paste-hint">Paste a lookbook image with Ctrl+V / Cmd+V</p>
+          </div>
+        </section>
+
+        <!-- Results -->
+        <section class="results-panel" id="results-panel" aria-live="polite" style="display:none;">
+
+          <div class="loading-state" id="results-loading">
+            <div class="spinner" aria-hidden="true"></div>
+            <p class="loading-text" id="loading-text">Analysing your lookbook…</p>
+          </div>
+
+          <div id="results-content" style="display:none;">
+            <div class="results-header">
+              <h2 class="results-title">Your fit</h2>
+              <span class="match-pill" id="match-pill"></span>
+            </div>
+
+            <div class="outfit-board" id="outfit-board" role="list"></div>
+
+            <blockquote class="stylist-note" id="stylist-note"></blockquote>
+
+            <button class="reset-btn" id="reset-btn">
+              <i class="ti ti-refresh" aria-hidden="true"></i> Try another look
+            </button>
+          </div>
+
+        </section>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <p>Style Assistant &mdash; powered by Claude AI</p>
+    </footer>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
